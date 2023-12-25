@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addMusicinPlaylistcontroller,
   createPlaylistController,
   deletePlaylistController,
   followController,
@@ -7,6 +8,7 @@ import {
   getSinglePlaylistController,
   likePlaylistController,
   removeFollowController,
+  removieMusicinPlaylistcontroller,
   unFollowController,
   unLikePlaylistController,
   updatePlaylistController,
@@ -21,6 +23,16 @@ userroute.get("/get-playlist/:uid", getPlaylistController);
 userroute.get("/single-playlist/:pid", getSinglePlaylistController);
 userroute.put("/like-playlist/:pid/:uid", likePlaylistController);
 userroute.put("/unlike-playlist/:pid/:uid", unLikePlaylistController);
+
+//add and remove music
+userroute.put(
+  "/add-music-in-playlist/:uid/:mid/:pid",
+  addMusicinPlaylistcontroller
+);
+userroute.put(
+  "/remove-music-in-playlist/:uid/:mid/:pid",
+  removieMusicinPlaylistcontroller
+);
 
 userroute.put("/follow/:uid/:fid", followController);
 userroute.put("/unfollow/:uid/:fid", unFollowController);

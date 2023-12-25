@@ -259,3 +259,67 @@ export const unLikePlaylistController = async (req, res) => {
     });
   }
 };
+
+// add music and removie music in playlist
+export const addMusicinPlaylistcontroller = async (req, res) => {
+  try {
+    const { uid, mid, pid } = req.params;
+    const user = await userModel.findById(uid);
+    const music = await musicModel.findById(mid);
+    const playlist = await playListModel.findById(pid).populate("user");
+    if (user._id === playlist.user._id) {
+      const session = await mongoose.startSession();
+      session.startTransaction();
+      playlist.music.push(music);
+      await playlist.save({ session });
+      await session.commitTransaction();
+      return res.status(200).send({
+        success: true,
+        message: "music added successfully",
+        playlist,
+      });
+    }
+    return res.status(404).send({
+      success: false,
+      message: "user id id not matched",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "error in add music in playlist",
+      error,
+    });
+  }
+};
+export const removieMusicinPlaylistcontroller = async (req, res) => {
+  try {
+    const { uid, mid, pid } = req.params;
+    const user = await userModel.findById(uid);
+    const music = await musicModel.findById(mid);
+    const playlist = await playListModel.findById(pid).populate("user");
+    if (user._id === playlist.user._id) {
+      const session = await mongoose.startSession();
+      session.startTransaction();
+      playlist.music.pull(music);
+      await playlist.save({ session });
+      await session.commitTransaction();
+      return res.status(200).send({
+        success: true,
+        message: "music added successfully",
+        playlist,
+      });
+    }
+    return res.status(404).send({
+      success: false,
+      message: "user id id not matched",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "error in add music in playlist",
+      error,
+    });
+  }
+};
