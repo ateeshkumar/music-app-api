@@ -4,6 +4,7 @@ import {
   loginController,
   registerController,
   singleUserController,
+  singleUserControllerById,
   updateuserController,
   userIdController,
 } from "../controllers/authController.js";
@@ -17,5 +18,6 @@ route.post("/login", loginController);
 
 route.put("/user-update/:id", requestSignIn, updateuserController);
 route.get("/all-user", adminAccess, getAllUserController);
-route.get("/user/:userId", requestSignIn, singleUserController);
+route.get("/user/:userId", singleUserController);
+route.get("/usersingle/:id", singleUserControllerById);
 export default route;

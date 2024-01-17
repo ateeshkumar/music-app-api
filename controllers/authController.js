@@ -238,3 +238,26 @@ export const singleUserController = async (req, res) => {
     });
   }
 };
+export const singleUserControllerById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userModel.findById(id);
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        message: "User Does not exist",
+      });
+    }
+    return res.status(200).send({
+      success: true,
+      message: "user data get successfully",
+      user,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "error in varification",
+      error,
+    });
+  }
+};
