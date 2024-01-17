@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getAllUserController,
+  getUserLogoController,
   loginController,
   registerController,
   singleUserController,
@@ -20,4 +21,5 @@ route.put("/user-update/:id", requestSignIn, updateuserController);
 route.get("/all-user", adminAccess, getAllUserController);
 route.get("/user/:userId", singleUserController);
 route.get("/usersingle/:id", singleUserControllerById);
+route.get("/user-logo/:id", getUserLogoController);
 export default route;

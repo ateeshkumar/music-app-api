@@ -261,3 +261,20 @@ export const singleUserControllerById = async (req, res) => {
     });
   }
 };
+export const getUserLogoController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pic = await userModel.findById(id).select("profile");
+    if (pic.profile.data) {
+      res.set("Content-type", pic.profile.contentType);
+      res.status(200).send(pic.profile.data);
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error in geting",
+      error,
+    });
+  }
+};
